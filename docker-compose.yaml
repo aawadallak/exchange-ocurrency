@@ -1,0 +1,25 @@
+version: "3.7"
+services:
+  postgres-db:
+    image: postgres
+    tty: true
+    container_name: postgress-container
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: "${DB_NAME}"
+      POSTGRES_USER: "${DB_USER}"
+      POSTGRES_PASSWORD: "${DB_PASS}"
+    volumes:
+      - web-api:/var/lib/postgresql/data
+    networks:
+      - api-go-web
+
+networks:
+  api-go-web:
+    driver: bridge
+
+volumes:
+  web-api:
+    driver: local
