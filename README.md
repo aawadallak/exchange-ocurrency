@@ -1,61 +1,48 @@
-### Recursos utilizados
-
+## Technologies
 - Golang
-- Teste Unitário
+- Unit Tests
 - PostgreSQL
 - Docker
-- DotEnv
-- Domain-Drive-Design(DDD)
+- Environmental Variables
+- Domain Drive Design (DDD)
 
-### Sobre o projeto
+## About the project
 
-O modelo construído foi utilizando uma ideia de Domain-Drive-Design(DDD) Onde separamos os componentes da aplicação baseada em camadas.
 
-Foi utilizado Golang como linguagem para a construção do Backend, para manutenção do banco de dados optei por usar Docker para gerir o contêiner do PostgreSQL, e para dar manutenção ao código e pensando em desenvolvimento contínuo foi implementado a uma biblioteca de migrações de banco de dados, assim ao iniciar a aplicação ele checa a última modificação feita, e caso haja uma versão nova, ele ira rodar para manter atualizado, e com suas dependências corretas.
+The model built was using an idea of ​​Domain Drive Design (DDD). Where we separate the application components based on layers.
 
-Para a modelagem da RestAPI, a biblioteca Fiber foi escolhida, em virtude do benchmarking de tempos de resposta e requisições em relação a outras bibliotecas do Golang, também foi modelado uma rota de teste para checar se a aplicação está aceitando requisições ou se a mesma se encontra com algum problema. Assim podendo aferir se a API está rodando.
+**Golang** was used as the language to build the Backend, for database maintenance I chose to use **Docker** to manage the **PostgreSQL** container, and to maintain the code and also thinking about continuous development, a **database migration** library was implemented , so when starting the application it checks the last modification made, and if there is a new version, it will run to keep it updated, and with its correct dependencies.
 
-Partindo da premissa que um código pode evoluir, a utilização de uma arquitetura correta é essencial para escalabilidade e manutenibilidade do projeto. Assim todas as camadas do projeto, tendem a seguir o seu conceito e a sua ideia no mesmo.
+For the RestAPI modeling, the **Fiber** library was chosen, due to the benchmarking of response times and requests against other Golang libraries, a test route was also modeled to check if the application is accepting requests or if it is encounters some problem. Thus being able to check if the API is running.
 
-Agrupando todas as ideias, foi escolhido utilizar variáveis de ambiente, pensando na facilidade do trabalho de equipe e gerenciamento de variáveis, como também na segurança da aplicação. Finalizando o processo de desenvolvimento do projeto, é essencial a utilização de testes para verificar se as funções estão funcionando da maneira que isoladamente devem funcionar e também como executariam em conjunto com a integração do serviço. 
+Based on the premise that code can evolve, the use of a correct **architecture** is essential for project scalability and maintainability. So all layers of the project tend to follow your concept and your idea in it.
 
-Atualmente o projeto implementou as seguintes interfaces do dominio para o banco de dados:
+Grouping all the ideas, it was chosen to use environment variables, thinking about the ease of teamwork and variable management, as well as the security of the application. At the end of the project development process, it is essential to **use tests** to verify that the functions are working the way they should work separately and also how they would perform in conjunction with the service integration.
 
-- Adicionar uma conversão ao banco de dados
-- Encontrar uma conversão a partir de um ID
-- Encontrar todas as conversões realizadas
-
-## Rotas da aplicação
-
-    Base: "http://localhost:5000"
-
-# Rota de segurança
+## Routes
   ```
-  Rota: ".../ping"
-  ex: "http://localhost:5000/ping"
+Method: GET
+Path: http://localhost:5000/ping
+Check if application is running
   ```
-
-Rota responsável apenas por realizar checar a saúde da API, aferindo se a mesma se encontra funcionando.
-
-# Grupo de rotas "exchange"
-    Rota: ".../{amount}/{from}/{to}/{rate}"  
-    ex: http://localhost:5000/exchange/10/BRL/USD/4.73
-
-Rota responsável por realizar a conversão do par de moedas e persistir no banco o registro da mesma
-   ```
-  Rota: ".../all"
-  ex: "http://localhost:5000/exchange/all"
+```
+Method: POST
+Path: http://localhost:5000/exchange/{amount}/{from}/{to}/{rate}
+Example: http://localhost:5000/exchange/10/BRL/USD/4.73
+Make ocurrency conversion and save on database
+```
+```
+Method: GET
+Path: http://localhost:5000/exchange/all
+Return all currency conversion
   ```
 
-Rota responsável por localizar todos as conversões já realizadas dentro da API.
   ```
-  Rota: ".../{id}"
-  ex: "http://localhost:5000/exchange/2"
+Method: GET
+Path: http://localhost:5000/exchange/:id
+Return currency conversion from informed id
   ```
-
-Rota responsável por localizar no banco de dados um registro que possua o ID informado pelo usuário.
-
-### Estrutura do projeto
+## Project architecture
 
 ```
 ┣ 📂 app
