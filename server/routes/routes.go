@@ -16,7 +16,7 @@ func SetRoute(router *fiber.App) *fiber.App {
 
 	exchange := router.Group("/exchange")
 	{
-		exchange.Get("/:amount/:from/:to/:rate", controller.Exchange)
+		exchange.Post("/:amount/:from/:to/:rate", controller.Exchange)
 
 		exchange.Get("/all", controller.FindAllOcurrencies)
 
